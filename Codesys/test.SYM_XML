@@ -3,7 +3,7 @@
 <CoDeSysSymbolTable>
 	<SymbolHeader>
 		<Version>-1</Version>
-		<ProjectId>105433</ProjectId>
+		<ProjectId>106422</ProjectId>
 		<WorkbenchVersion>2.3.9.49</WorkbenchVersion>
 		<CompilerVersion>2.3.9.48</CompilerVersion>
 	</SymbolHeader>
@@ -13,20 +13,20 @@
 		<TypeString TypeId="2" Size="81"/>
 	</SymbolTypeList>
 	<SymbolVarList>
-		<Var Type="1" Flags="33554500" Access="98" RefId="4" Offset="140">.rVersion</Var>
-		<Var Type="0" Flags="64" Access="98" RefId="4" Offset="144">PLC_PRG.a</Var>
-		<Var Type="1" Flags="64" Access="98" RefId="4" Offset="148">PLC_PRG.b</Var>
-		<Var Type="2" Flags="64" Access="98" RefId="4" Offset="152">PLC_PRG.c</Var>
+		<Var Type="1" Flags="33554500" Access="98" RefId="4" Offset="148">.rVersion</Var>
+		<Var Type="0" Flags="64" Access="98" RefId="4" Offset="146">PLC_PRG.a</Var>
+		<Var Type="1" Flags="64" Access="98" RefId="4" Offset="152">PLC_PRG.b</Var>
+		<Var Type="2" Flags="64" Access="98" RefId="4" Offset="156">PLC_PRG.c</Var>
 	</SymbolVarList>
 	<SymbolTaskList/>
 	<SymbolTargetSettings>
-		<MaxNumberOfPOUs>4096</MaxNumberOfPOUs>
+		<MaxNumberOfPOUs>1023</MaxNumberOfPOUs>
 		<Segments>
-			<Segment Area="1" RefId="0" Address="0" Size="24576" Attributes="0"/>
-			<Segment Area="0" RefId="1" Address="0" Size="65536" Attributes="0"/>
-			<Segment Area="0" RefId="2" Address="65536" Size="65536" Attributes="0"/>
-			<Segment Area="1" RefId="3" Address="24576" Size="106484" Attributes="2"/>
-			<Segment Area="0" RefId="4" Address="131072" Size="67108864" Attributes="1"/>
+			<Segment Area="-1" RefId="0" Address="536870912" Size="16384" Attributes="0"/>
+			<Segment Area="-1" RefId="1" Address="684190720" Size="3064" Attributes="0"/>
+			<Segment Area="-1" RefId="2" Address="684185600" Size="3064" Attributes="0"/>
+			<Segment Area="-1" RefId="3" Address="536887296" Size="16384" Attributes="2"/>
+			<Segment Area="0" RefId="4" Address="0" Size="1036288" Attributes="1"/>
 		</Segments>
 	</SymbolTargetSettings>
 </CoDeSysSymbolTable>
