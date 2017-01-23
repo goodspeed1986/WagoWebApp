@@ -12,7 +12,9 @@ window.onload = function () {
     })
 
 }
-
+function ChangeInnerHtml(mutationTarget) {
+    document.getElementById(mutationTarget.id).innerHTML = mutationTarget.dataset.value;
+}
 function CreateDom(varsJson) {
     var tbody = document.getElementById('varsTable').getElementsByTagName("TBODY")[0];
     //alert(JSON.stringify(varsJson));
@@ -21,8 +23,21 @@ function CreateDom(varsJson) {
         var tdName = document.createElement("TD");
         tdName.appendChild(document.createTextNode(varsJson[i].Name));
         var tdValue = document.createElement("TD");
-        tdValue.id = varsJson[i].Name;
-        tdValue.appendChild(document.createTextNode(''));
+        var divValue = document.createElement("div");
+        divValue.id = varsJson[i].Name;
+        var MO = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+        var observer = new MO(function (mutations) {
+            mutations.forEach(function (mutation) {
+                ChangeInnerHtml(mutation.target);
+            });
+        });
+        var config = {
+            'attributes': true,
+            'attributeOldValue': true,
+            'attributeFilter': ['data-value']
+        };
+        observer.observe(divValue, config);
+        tdValue.appendChild(divValue);
         var tdAction = document.createElement("TD");
         var data = {
             RefId: varsJson[i].RefId,
@@ -273,7 +288,9 @@ function startPoll(plcVars, webvisuUrl) {
     getPlcValues(plcVars, webvisuUrl, function (err, plcVarsValues) {
         if (!err) {
             for (var i = 0; i < plcVarsValues.length; i++) {
-                document.getElementById(plcVarsValues[i].Name).innerHTML = plcVarsValues[i].Value;
+                if (document.getElementById(plcVarsValues[i].Name).dataset.value !== plcVarsValues[i].Value) {
+                    document.getElementById(plcVarsValues[i].Name).dataset.value = plcVarsValues[i].Value;
+                }
             }
             setTimeout(function () { startPoll(plcVars, webvisuUrl) }, 200);
         } else {
