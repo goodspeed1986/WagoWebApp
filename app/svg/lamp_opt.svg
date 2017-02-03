@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1"  viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <defs>
+  <radialGradient id="SVGID_1_" cx="37.593" cy="37.593" r="37.593" gradientUnits="userSpaceOnUse">
+   <stop style="stop-color:#5F5F5F" offset=".8077"/>
+   <stop style="stop-color:#8E8E8E" offset=".8315"/>
+   <stop style="stop-color:#B8B8B8" offset=".8566"/>
+   <stop style="stop-color:#D7D7D7" offset=".8793"/>
+   <stop style="stop-color:#E9E9E9" offset=".8985"/>
+   <stop style="stop-color:#F0F0F0" offset=".9121"/>
+   <stop style="stop-color:#969696" offset="1"/>
+  </radialGradient>
+  <radialGradient id="SVGID_2_" cx="36.199" cy="37.144" r="41.257" gradientUnits="userSpaceOnUse">
+   <stop style="stop-color:#000096" offset="0"/>
+   <stop style="stop-color:#000096" offset=".0016"/>
+   <stop style="stop-color:#00007C" offset=".1317"/>
+   <stop style="stop-color:#000069" offset=".2755"/>
+   <stop style="stop-color:#00005B" offset=".4408"/>
+   <stop style="stop-color:#000052" offset=".6444"/>
+   <stop style="stop-color:#000050" offset="1"/>
+  </radialGradient>
+  <radialGradient id="SVGID_3_" cx="37.593" cy="37.593" r="26.713" gradientUnits="userSpaceOnUse">
+   <stop style="stop-color:#689E5D" offset=".8626"/>
+   <stop style="stop-color:#59914F" offset=".8967"/>
+   <stop style="stop-color:#2E6E26" offset="1"/>
+  </radialGradient>
+  <radialGradient id="SVGID_3_-7" cx="37.593" cy="37.593" r="26.713" gradientUnits="userSpaceOnUse">
+   <stop style="stop-color:#CBF4B4" offset="0"/>
+   <stop style="stop-color:#B1DBA1" offset=".5055"/>
+   <stop style="stop-color:#ADD79D" offset=".5958"/>
+   <stop style="stop-color:#A0CD91" offset=".69"/>
+   <stop style="stop-color:#8BBC7E" offset=".786"/>
+   <stop style="stop-color:#6EA363" offset=".8827"/>
+   <stop style="stop-color:#689E5D" offset=".9011"/>
+   <stop style="stop-color:#669C5B" offset=".9506"/>
+   <stop style="stop-color:#5F9755" offset=".9685"/>
+   <stop style="stop-color:#548D4A" offset=".9813"/>
+   <stop style="stop-color:#437F3A" offset=".9916"/>
+   <stop style="stop-color:#2E6E26" offset="1"/>
+  </radialGradient>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(0,-222)">
+  <g transform="matrix(.99753 0 0 .99753 0 222)">
+   <circle cx="37.593" cy="37.594" r="37.593" style="fill:url(#SVGID_1_)"/>
+   <circle cx="37.593" cy="37.594" r="28.195" style="fill:url(#SVGID_2_)"/>
+   <circle cx="37.593" cy="37.594" r="26.712" style="fill:url(#SVGID_3_)"/>
+  </g>
+ </g>
+ <g style="display:none">
+  <g transform="translate(0 -.187)">
+   <circle cx="37.593" cy="37.594" r="37.593" style="fill:url(#SVGID_1_)"/>
+   <circle cx="37.593" cy="37.594" r="28.195" style="fill:url(#SVGID_2_)"/>
+   <circle cx="37.593" cy="37.594" r="26.712" style="fill:url(#SVGID_3_-7)"/>
+  </g>
+ </g>
+</svg>
