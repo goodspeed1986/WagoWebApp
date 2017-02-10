@@ -1,17 +1,69 @@
 const SDB_URL = '../../plc/download.sdb'; // PLC 750-880
 const WEB_VISU_URL = '../../plc/webvisu.htm'; // PLC 750-880
 
+let conf;
+
 window.onload = function () {
+    getConf('./conf/conf.json', function (err, confJson) {
+        if (!err) {
+            conf = JSON.parse(confJson);
+
+            // alert(JSON.stringify(conf.mnemo1))
+
+
+        } else {
+            alert(err)
+            setTimeout(function () { getConf('./conf/conf.json') }, 10000);
+        }
+
+    })
     getPlcVars(SDB_URL, function (err, varsJson) {
         if (!err) {
-            CreateDom(varsJson);
-            startPoll(varsJson, WEB_VISU_URL);
+            CreateDom(varsJson, conf['mnemo1'], function (err, curVarsJson) {
+                startPoll(curVarsJson, WEB_VISU_URL);
+            });
         } else {
             alert(err)
             setTimeout(function () { getPlcVars(SDB_URL) }, 10000);
         }
     })
+}
 
+function getConf(confUrl, cb) {
+    let req = null;
+    if (window.XMLHttpRequest) {
+        try {
+            req = new XMLHttpRequest();
+        } catch (e) { }
+    } else if (window.ActiveXObject) {
+        try {
+            req = new ActiveXObject('Msxml2.XMLHTTP');
+        } catch (e) {
+            try {
+                req = new ActiveXObject('Microsoft.XMLHTTP');
+            } catch (e) { }
+        }
+    }
+
+    req.open("get", confUrl, true);
+    req.timeout = 3000;
+    req.responseType = "application/json";
+    try {
+        req.send(null);
+    }
+    catch (e) {
+        req.abort();
+    }
+    req.onreadystatechange = function () {
+        if (req.readyState == 4) {
+            if (req.status == 200) {
+                return cb(null, req.response);
+            }
+            else {
+                return cb('PLC_NOT_RESPONSE_CONF');
+            }
+        }
+    }
 }
 
 function getPlcVars(sdbUrl, cb) {
@@ -131,7 +183,7 @@ function sdb2Json(buf) {
             offset++;
         }
         let sName = bin2String(aName);
-        aVars[ix].Name = sName;
+        aVars[ix].Name = sName.replaceAll('.', '_');
         ix++;
     }
     sdb.types = aTypes;
@@ -143,9 +195,11 @@ function bin2String(array) {
     return String.fromCharCode.apply(String, array);
 }
 
-function CreateDom(varsJson) {
-    var s = Snap('#mnemo');
+String.prototype.replaceAll = function (target, replacement) {
+    return this.split(target).join(replacement);
+};
 
+function CreateDom(varsJson, mnemoObj, cb) {
     Snap.plugin(function (Snap, Element, Paper, global) {
 
         Element.prototype.altDrag = function () {
@@ -172,24 +226,61 @@ function CreateDom(varsJson) {
 
 
     });
+    let i = 1;
+    mnemoObj.objects.forEach(function (confItem) {
+        let s = Snap('#mnemo');
+        Snap.load("./svg/" + confItem.svgName, function (f) {
+            let g = f.select("svg");
+            g.attr({
+                id: confItem.Name,
+                height: confItem.height,
+                weight: confItem.weight,
+                x: confItem.x,
+                y: confItem.y,
+                "data-value": '0'
+            })
+            g.altDrag();
+            s.append(g);
 
-    Snap.load("./svg/lamp_opt.svg", function (f) {
-        var g = f.select("svg");
-        g.attr({
+            let curElem = document.getElementById(confItem.Name);
+            let MO = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+            let observer = new MO(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (confItem.objType === 'text') {
+                        ChangeText(mutation.target);
+                    }
+                    if (confItem.objType === 'layer') {
+                        ChangeLayer(mutation.target, mutation.oldValue);
+                    }
+                });
+            });
+            let config = {
+                'attributes': true,
+                'attributeOldValue': true,
+                'attributeFilter': ['data-value']
+            };
+            observer.observe(curElem, config);
 
-            height: "50px",
-            weight: "50px",
-            x: '0px',
-            y: '0px'
-        })
-        // f.selectAll("polygon[fill='#09B39C']").attr({
-        //     fill: "#fc0"
-        // })
-        s.append(g);
-        g.altDrag();
+            i++;
+            if (mnemoObj.objects.length === i) {
+                return cb(null, curVarsJson);
+            }
+        });
+
     });
 
-    let tbody = document.getElementById('varsTable').getElementsByTagName("TBODY")[0];
+    let curVarsJson = [];
+
+    varsJson.forEach(function (varsItem) {
+        mnemoObj.objects.forEach(function (confItem) {
+            if (varsItem.Name === confItem.Name) {
+                curVarsJson.push(varsItem);
+            }
+        });
+    });
+
+
+    /*let tbody = document.getElementById('varsTable').getElementsByTagName("TBODY")[0];
     //alert(JSON.stringify(varsJson));
     for (let i = 0; i < varsJson.length; i++) {
         let row = document.createElement("TR");
@@ -210,6 +301,7 @@ function CreateDom(varsJson) {
             'attributeFilter': ['data-value']
         };
         observer.observe(divValue, config);
+
         tdValue.appendChild(divValue);
         let tdAction = document.createElement("TD");
         let data = {
@@ -251,29 +343,54 @@ function CreateDom(varsJson) {
         row.appendChild(tdValue);
         row.appendChild(tdAction);
         tbody.appendChild(row);
-    }
+    }*/
 }
 
-function ChangeInnerHtml(mutationTarget) {
-    document.getElementById(mutationTarget.id).innerHTML = mutationTarget.dataset.value;
+function ChangeText(mutationTarget) {
+    // document.getElementById(mutationTarget.id).firstElementChild.innerHTML = mutationTarget.attributes['data-value'].value;
+    let curSvg = Snap.select('#' + mutationTarget.id);
+    let textCur = curSvg.select('text');
+    textCur.attr({
+        text: mutationTarget.attributes['data-value'].value
+    })
+}
+
+function ChangeLayer(mutationTarget, mutationOldValue) {
+    let curSvg = Snap.select('#' + mutationTarget.id);
+    let layerCur = curSvg.select("#layer" + mutationTarget.attributes['data-value'].value);
+    layerCur.attr({
+        style: 'display:inline'
+    });
+    let layerOld = curSvg.select("#layer" + mutationOldValue);
+    if (layerOld !== null) {
+        layerOld.attr({
+            style: 'display:none'
+        });
+    }
 }
 
 function startPoll(plcVars, webvisuUrl) {
     getPlcValues(plcVars, webvisuUrl, function (err, plcVarsValues) {
         if (!err) {
             for (let i = 0; i < plcVarsValues.length; i++) {
-                if (document.getElementById(plcVarsValues[i].Name).dataset.value !== plcVarsValues[i].Value) {
-                    document.getElementById(plcVarsValues[i].Name).dataset.value = plcVarsValues[i].Value;
-                    // document.getElementById('mycircle').setAttributeNS(null, "data-value", plcVarsValues[i].Value);
+                let g = Snap.select('#' + plcVarsValues[i].Name);
+                if (g !== null) {
+                    if (g.attr('data-value') !== plcVarsValues[i].Value) {
+                        g.attr({
+                            "data-value": plcVarsValues[i].Value
+                        })
+                    }
                 }
+                //     if (document.getElementById(plcVarsValues[i].Name).dataset.value !== plcVarsValues[i].Value) {
+                //         document.getElementById(plcVarsValues[i].Name).dataset.value = plcVarsValues[i].Value;
+                // }
             }
             setTimeout(function () { startPoll(plcVars, webvisuUrl) }, 200);
         } else {
             alert(err);
             setTimeout(function () { startPoll(plcVars, webvisuUrl) }, 10000);
         }
-    }
-    )
+    })
 }
 
 function getPlcValues(plcVars, webvisuUrl, cb) {

@@ -48,14 +48,14 @@
    </cc:Work>
   </rdf:RDF>
  </metadata>
- <g transform="translate(0,-222)">
+ <g id="layer0" style="display:inline" transform="translate(0,-222)">
   <g transform="matrix(.99753 0 0 .99753 0 222)">
    <circle cx="37.593" cy="37.594" r="37.593" style="fill:url(#SVGID_1_)"/>
    <circle cx="37.593" cy="37.594" r="28.195" style="fill:url(#SVGID_2_)"/>
    <circle cx="37.593" cy="37.594" r="26.712" style="fill:url(#SVGID_3_)"/>
   </g>
  </g>
- <g style="display:none">
+ <g id="layer1" style="display:none">
   <g transform="translate(0 -.187)">
    <circle cx="37.593" cy="37.594" r="37.593" style="fill:url(#SVGID_1_)"/>
    <circle cx="37.593" cy="37.594" r="28.195" style="fill:url(#SVGID_2_)"/>
