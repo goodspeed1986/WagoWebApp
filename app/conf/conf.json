@@ -1,6 +1,9 @@
 {
   "mnemo1": {
     "name": "Мнемосхема №1",
+    "mainSvg": "Сhinarevo-A3.svg",
+    "mainSvg_x": 150,
+    "mainSvg_y": 0,
     "objects": [
       {
         "Name": "PLC_PRG_a",

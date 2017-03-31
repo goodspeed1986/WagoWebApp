@@ -1,32 +1,29 @@
 const SDB_URL = '../../plc/download.sdb'; // PLC 750-880
 const WEB_VISU_URL = '../../plc/webvisu.htm'; // PLC 750-880
-
-let conf;
-
+const CONF_URL = './conf/conf.json';
+// const SDB_URL = '../../webvisu/DOWNLOAD.SDB'; // PLC 750-8202
+// const WEB_VISU_URL = '../../webvisu/webvisu.htm'; // PLC 750-8202
 window.onload = function () {
-    getConf('./conf/conf.json', function (err, confJson) {
+    getConf(CONF_URL, function (err, confJson) {
         if (!err) {
-            conf = JSON.parse(confJson);
-
-            // alert(JSON.stringify(conf.mnemo1))
-
-
+            let conf = JSON.parse(confJson);
+            getPlcVars(SDB_URL, function (err, varsJson) {
+                if (!err) {
+                    CreateDom(varsJson, conf['mnemo1'], function (err, curVarsJson) {
+                        startPoll(curVarsJson, WEB_VISU_URL);
+                    });
+                } else {
+                    alert(err)
+                    setTimeout(function () { getPlcVars(SDB_URL) }, 10000);
+                }
+            })
         } else {
             alert(err)
-            setTimeout(function () { getConf('./conf/conf.json') }, 10000);
+            setTimeout(function () { getConf(CONF_URL) }, 10000);
         }
 
     })
-    getPlcVars(SDB_URL, function (err, varsJson) {
-        if (!err) {
-            CreateDom(varsJson, conf['mnemo1'], function (err, curVarsJson) {
-                startPoll(curVarsJson, WEB_VISU_URL);
-            });
-        } else {
-            alert(err)
-            setTimeout(function () { getPlcVars(SDB_URL) }, 10000);
-        }
-    })
+
 }
 
 function getConf(confUrl, cb) {
@@ -227,8 +224,19 @@ function CreateDom(varsJson, mnemoObj, cb) {
 
     });
     let i = 1;
+    let s = Snap('#mnemo');
+    Snap.load("./svg/" + mnemoObj.mainSvg, function (f) {
+        let g = f.select("svg");
+        g.attr({
+
+            x: mnemoObj.mainSvg_x,
+            y: mnemoObj.mainSvg_y
+
+        })
+        s.append(g);
+    })
     mnemoObj.objects.forEach(function (confItem) {
-        let s = Snap('#mnemo');
+
         Snap.load("./svg/" + confItem.svgName, function (f) {
             let g = f.select("svg");
             g.attr({
@@ -347,7 +355,6 @@ function CreateDom(varsJson, mnemoObj, cb) {
 }
 
 function ChangeText(mutationTarget) {
-    // document.getElementById(mutationTarget.id).firstElementChild.innerHTML = mutationTarget.attributes['data-value'].value;
     let curSvg = Snap.select('#' + mutationTarget.id);
     let textCur = curSvg.select('text');
     textCur.attr({
@@ -381,9 +388,6 @@ function startPoll(plcVars, webvisuUrl) {
                         })
                     }
                 }
-                //     if (document.getElementById(plcVarsValues[i].Name).dataset.value !== plcVarsValues[i].Value) {
-                //         document.getElementById(plcVarsValues[i].Name).dataset.value = plcVarsValues[i].Value;
-                // }
             }
             setTimeout(function () { startPoll(plcVars, webvisuUrl) }, 200);
         } else {
