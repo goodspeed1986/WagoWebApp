@@ -1,8 +1,9 @@
 const SDB_URL = '../../plc/download.sdb'; // PLC 750-880
 const WEB_VISU_URL = '../../plc/webvisu.htm'; // PLC 750-880
-const CONF_URL = './conf/conf.json';
 // const SDB_URL = '../../webvisu/DOWNLOAD.SDB'; // PLC 750-8202
 // const WEB_VISU_URL = '../../webvisu/webvisu.htm'; // PLC 750-8202
+const CONF_URL = './conf/conf.json';
+
 window.onload = function () {
     getConf(CONF_URL, function (err, confJson) {
         if (!err) {
@@ -223,23 +224,59 @@ function CreateDom(varsJson, mnemoObj, cb) {
 
 
     });
-    let i = 1;
+
+    let curVarsJson = [];
+    varsJson.forEach(function (varsItem) {
+        mnemoObj.objects.forEach(function (confItem) {
+            confItem.Name = confItem.Name.replaceAll('.', '_');
+            if (varsItem.Name === confItem.Name) {
+                curVarsJson.push(varsItem);
+            }
+        });
+    });
+
     let s = Snap('#mnemo');
     Snap.load("./svg/" + mnemoObj.mainSvg, function (f) {
         let g = f.select("svg");
         g.attr({
-
             x: mnemoObj.mainSvg_x,
             y: mnemoObj.mainSvg_y
-
         })
         s.append(g);
-    })
-    mnemoObj.objects.forEach(function (confItem) {
 
-        Snap.load("./svg/" + confItem.svgName, function (f) {
-            let g = f.select("svg");
-            g.attr({
+        let svgObjects = {};
+        let arr = unique(mnemoObj.objects);
+        arr.forEach(function (Item, counter) {
+            Snap.load("./svg/" + Item, function (f) {
+                svgObjects[Item] = f.select("svg");
+                if (arr.length == counter + 1) {
+                    RenderSvg(svgObjects, mnemoObj.objects);
+                    return cb(null, curVarsJson);
+                }
+            });
+        });
+    })
+
+    function unique(arr) {
+        var obj = {};
+        for (var i = 0; i < arr.length; i++) {
+            var str = arr[i].svgName;
+            obj[str] = true; // запомнить строку в виде свойства объекта
+        }
+        return Object.keys(obj); // или собрать ключи перебором для IE8-
+    }
+
+    function RenderSvg(svgItems, confItems) {
+        let uniqSvg = {};
+        let = svgObject = {};
+        confItems.forEach(function (confItem) {
+            if (svgItems[confItem.svgName] === uniqSvg[confItem.svgName]) {
+                svgObject = svgItems[confItem.svgName].clone();
+            } else {
+                svgObject = svgItems[confItem.svgName];
+                uniqSvg[confItem.svgName] = svgItems[confItem.svgName];
+            }
+            svgObject.attr({
                 id: confItem.Name,
                 height: confItem.height,
                 weight: confItem.weight,
@@ -247,8 +284,8 @@ function CreateDom(varsJson, mnemoObj, cb) {
                 y: confItem.y,
                 "data-value": '0'
             })
-            g.altDrag();
-            s.append(g);
+            svgObject.altDrag()
+            s.append(svgObject);
 
             let curElem = document.getElementById(confItem.Name);
             let MO = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
@@ -268,24 +305,10 @@ function CreateDom(varsJson, mnemoObj, cb) {
                 'attributeFilter': ['data-value']
             };
             observer.observe(curElem, config);
-
-            i++;
-            if (mnemoObj.objects.length === i) {
-                return cb(null, curVarsJson);
-            }
         });
+    }
 
-    });
 
-    let curVarsJson = [];
-
-    varsJson.forEach(function (varsItem) {
-        mnemoObj.objects.forEach(function (confItem) {
-            if (varsItem.Name === confItem.Name) {
-                curVarsJson.push(varsItem);
-            }
-        });
-    });
 
 
     /*let tbody = document.getElementById('varsTable').getElementsByTagName("TBODY")[0];
@@ -354,6 +377,7 @@ function CreateDom(varsJson, mnemoObj, cb) {
     }*/
 }
 
+
 function ChangeText(mutationTarget) {
     let curSvg = Snap.select('#' + mutationTarget.id);
     let textCur = curSvg.select('text');
@@ -364,11 +388,11 @@ function ChangeText(mutationTarget) {
 
 function ChangeLayer(mutationTarget, mutationOldValue) {
     let curSvg = Snap.select('#' + mutationTarget.id);
-    let layerCur = curSvg.select("#layer" + mutationTarget.attributes['data-value'].value);
+    let layerCur = curSvg.select("g[layer = '" + mutationTarget.attributes['data-value'].value + "']");
     layerCur.attr({
         style: 'display:inline'
     });
-    let layerOld = curSvg.select("#layer" + mutationOldValue);
+    let layerOld = curSvg.select("g[layer = '" + mutationOldValue + "']");
     if (layerOld !== null) {
         layerOld.attr({
             style: 'display:none'

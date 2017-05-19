@@ -1,42 +1,12 @@
 {
   "mnemo1": {
     "name": "Мнемосхема №1",
-    "mainSvg": "Сhinarevo-A3.svg",
+    "mainSvg": "main.svg",
     "mainSvg_x": 150,
     "mainSvg_y": 0,
     "objects": [
       {
-        "Name": "PLC_PRG_a",
-        "svgName": "lamp_opt.svg",
-        "objType": "layer",
-        "access": "read",
-        "x": 50,
-        "y": 50,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "PLC_PRG_b",
-        "svgName": "text.svg",
-        "objType": "text",
-        "access": "read",
-        "x": 100,
-        "y": 100,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "_rVersion",
-        "svgName": "text.svg",
-        "objType": "text",
-        "access": "read",
-        "x": 150,
-        "y": 150,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "PLC_PRG_c",
+        "Name": "PLC_PRG.c",
         "svgName": "text.svg",
         "objType": "text",
         "access": "read",
@@ -44,34 +14,19 @@
         "y": 170,
         "height": 50,
         "weight": 50
-      }
-    ]
-  },
-  "mnemo2": {
-    "name": "Мнемосхема №2",
-    "objects": [
+      },
       {
-        "Name": "PLC_PRG_DI_1",
+        "Name": "PLC_PRG.a",
         "svgName": "lamp_opt.svg",
         "objType": "layer",
         "access": "read",
         "x": 50,
         "y": 50,
-        "height": 50,
-        "weight": 50
+        "height": 25,
+        "weight": 25
       },
       {
-        "Name": "PLC_PRG_AI_1",
-        "svgName": "text.svg",
-        "objType": "text",
-        "access": "read",
-        "x": 100,
-        "y": 100,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "PLC_PRG_AI_2",
+        "Name": ".rVersion",
         "svgName": "text.svg",
         "objType": "text",
         "access": "read",
@@ -81,7 +36,52 @@
         "weight": 50
       },
       {
-        "Name": "PLC_PRG_AI_3",
+        "Name": "PLC_PRG.b",
+        "svgName": "text.svg",
+        "objType": "text",
+        "access": "read",
+        "x": 100,
+        "y": 100,
+        "height": 100,
+        "weight": 100
+      }
+    ]
+  },
+  "mnemo2": {
+    "name": "Мнемосхема №2",
+    "objects": [
+      {
+        "Name": "PLC_PRG.DI_1",
+        "svgName": "lamp_opt.svg",
+        "objType": "layer",
+        "access": "read",
+        "x": 50,
+        "y": 50,
+        "height": 50,
+        "weight": 50
+      },
+      {
+        "Name": "PLC_PRG.AI_1",
+        "svgName": "text.svg",
+        "objType": "text",
+        "access": "read",
+        "x": 100,
+        "y": 100,
+        "height": 50,
+        "weight": 50
+      },
+      {
+        "Name": "PLC_PRG.AI_2",
+        "svgName": "text.svg",
+        "objType": "text",
+        "access": "read",
+        "x": 150,
+        "y": 150,
+        "height": 50,
+        "weight": 50
+      },
+      {
+        "Name": "PLC_PRG.AI_3",
         "svgName": "text.svg",
         "objType": "text",
         "access": "read",
