@@ -3,7 +3,7 @@
 <CoDeSysSymbolTable>
 	<SymbolHeader>
 		<Version>-1</Version>
-		<ProjectId>135743</ProjectId>
+		<ProjectId>100657</ProjectId>
 		<WorkbenchVersion>2.3.9.49</WorkbenchVersion>
 		<CompilerVersion>2.3.9.48</CompilerVersion>
 	</SymbolHeader>
@@ -11,135 +11,22 @@
 		<TypeSimple TypeId="0" Size="1">BOOL</TypeSimple>
 		<TypeSimple TypeId="1" Size="4">REAL</TypeSimple>
 		<TypeString TypeId="2" Size="81"/>
-		<TypeSimple TypeId="3" Size="1">BYTE</TypeSimple>
-		<TypeArray TypeId="4" Size="101">
-			<Dimension Lower="0" Upper="100"/>
-			<BaseType>
-				<TypeSimple Size="1">BYTE</TypeSimple>
-			</BaseType>
-		</TypeArray>
-		<TypeSimple TypeId="5" Size="0">BOOL</TypeSimple>
-		<TypeSimple TypeId="6" Size="2">WORD</TypeSimple>
 	</SymbolTypeList>
 	<SymbolVarList>
-		<Var Type="6" Flags="33554464" Access="98" RefId="1" Offset="0">.AI_1</Var>
-		<Var Type="5" Flags="33554464" Access="98" RefId="1" Offset="64">.DI_1</Var>
-		<Var Type="5" Flags="33554464" Access="98" RefId="2" Offset="0">.DO_1</Var>
-		<Var Type="1" Flags="33554500" Access="98" RefId="4" Offset="140">.rVersion</Var>
-		<Var Type="0" Flags="64" Access="98" RefId="4" Offset="144">PLC_PRG.a</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="0" TopLevelType="4">PLC_PRG.arr[0]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="100" TopLevelType="4">PLC_PRG.arr[100]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="10" TopLevelType="4">PLC_PRG.arr[10]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="11" TopLevelType="4">PLC_PRG.arr[11]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="12" TopLevelType="4">PLC_PRG.arr[12]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="13" TopLevelType="4">PLC_PRG.arr[13]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="14" TopLevelType="4">PLC_PRG.arr[14]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="15" TopLevelType="4">PLC_PRG.arr[15]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="16" TopLevelType="4">PLC_PRG.arr[16]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="17" TopLevelType="4">PLC_PRG.arr[17]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="18" TopLevelType="4">PLC_PRG.arr[18]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="19" TopLevelType="4">PLC_PRG.arr[19]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="1" TopLevelType="4">PLC_PRG.arr[1]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="20" TopLevelType="4">PLC_PRG.arr[20]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="21" TopLevelType="4">PLC_PRG.arr[21]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="22" TopLevelType="4">PLC_PRG.arr[22]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="23" TopLevelType="4">PLC_PRG.arr[23]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="24" TopLevelType="4">PLC_PRG.arr[24]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="25" TopLevelType="4">PLC_PRG.arr[25]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="26" TopLevelType="4">PLC_PRG.arr[26]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="27" TopLevelType="4">PLC_PRG.arr[27]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="28" TopLevelType="4">PLC_PRG.arr[28]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="29" TopLevelType="4">PLC_PRG.arr[29]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="2" TopLevelType="4">PLC_PRG.arr[2]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="30" TopLevelType="4">PLC_PRG.arr[30]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="31" TopLevelType="4">PLC_PRG.arr[31]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="32" TopLevelType="4">PLC_PRG.arr[32]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="33" TopLevelType="4">PLC_PRG.arr[33]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="34" TopLevelType="4">PLC_PRG.arr[34]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="35" TopLevelType="4">PLC_PRG.arr[35]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="36" TopLevelType="4">PLC_PRG.arr[36]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="37" TopLevelType="4">PLC_PRG.arr[37]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="38" TopLevelType="4">PLC_PRG.arr[38]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="39" TopLevelType="4">PLC_PRG.arr[39]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="3" TopLevelType="4">PLC_PRG.arr[3]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="40" TopLevelType="4">PLC_PRG.arr[40]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="41" TopLevelType="4">PLC_PRG.arr[41]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="42" TopLevelType="4">PLC_PRG.arr[42]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="43" TopLevelType="4">PLC_PRG.arr[43]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="44" TopLevelType="4">PLC_PRG.arr[44]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="45" TopLevelType="4">PLC_PRG.arr[45]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="46" TopLevelType="4">PLC_PRG.arr[46]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="47" TopLevelType="4">PLC_PRG.arr[47]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="48" TopLevelType="4">PLC_PRG.arr[48]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="49" TopLevelType="4">PLC_PRG.arr[49]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="4" TopLevelType="4">PLC_PRG.arr[4]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="50" TopLevelType="4">PLC_PRG.arr[50]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="51" TopLevelType="4">PLC_PRG.arr[51]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="52" TopLevelType="4">PLC_PRG.arr[52]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="53" TopLevelType="4">PLC_PRG.arr[53]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="54" TopLevelType="4">PLC_PRG.arr[54]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="55" TopLevelType="4">PLC_PRG.arr[55]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="56" TopLevelType="4">PLC_PRG.arr[56]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="57" TopLevelType="4">PLC_PRG.arr[57]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="58" TopLevelType="4">PLC_PRG.arr[58]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="59" TopLevelType="4">PLC_PRG.arr[59]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="5" TopLevelType="4">PLC_PRG.arr[5]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="60" TopLevelType="4">PLC_PRG.arr[60]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="61" TopLevelType="4">PLC_PRG.arr[61]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="62" TopLevelType="4">PLC_PRG.arr[62]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="63" TopLevelType="4">PLC_PRG.arr[63]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="64" TopLevelType="4">PLC_PRG.arr[64]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="65" TopLevelType="4">PLC_PRG.arr[65]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="66" TopLevelType="4">PLC_PRG.arr[66]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="67" TopLevelType="4">PLC_PRG.arr[67]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="68" TopLevelType="4">PLC_PRG.arr[68]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="69" TopLevelType="4">PLC_PRG.arr[69]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="6" TopLevelType="4">PLC_PRG.arr[6]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="70" TopLevelType="4">PLC_PRG.arr[70]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="71" TopLevelType="4">PLC_PRG.arr[71]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="72" TopLevelType="4">PLC_PRG.arr[72]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="73" TopLevelType="4">PLC_PRG.arr[73]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="74" TopLevelType="4">PLC_PRG.arr[74]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="75" TopLevelType="4">PLC_PRG.arr[75]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="76" TopLevelType="4">PLC_PRG.arr[76]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="77" TopLevelType="4">PLC_PRG.arr[77]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="78" TopLevelType="4">PLC_PRG.arr[78]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="79" TopLevelType="4">PLC_PRG.arr[79]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="7" TopLevelType="4">PLC_PRG.arr[7]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="80" TopLevelType="4">PLC_PRG.arr[80]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="81" TopLevelType="4">PLC_PRG.arr[81]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="82" TopLevelType="4">PLC_PRG.arr[82]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="83" TopLevelType="4">PLC_PRG.arr[83]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="84" TopLevelType="4">PLC_PRG.arr[84]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="85" TopLevelType="4">PLC_PRG.arr[85]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="86" TopLevelType="4">PLC_PRG.arr[86]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="87" TopLevelType="4">PLC_PRG.arr[87]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="88" TopLevelType="4">PLC_PRG.arr[88]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="89" TopLevelType="4">PLC_PRG.arr[89]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="8" TopLevelType="4">PLC_PRG.arr[8]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="90" TopLevelType="4">PLC_PRG.arr[90]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="91" TopLevelType="4">PLC_PRG.arr[91]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="92" TopLevelType="4">PLC_PRG.arr[92]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="93" TopLevelType="4">PLC_PRG.arr[93]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="94" TopLevelType="4">PLC_PRG.arr[94]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="95" TopLevelType="4">PLC_PRG.arr[95]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="96" TopLevelType="4">PLC_PRG.arr[96]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="97" TopLevelType="4">PLC_PRG.arr[97]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="98" TopLevelType="4">PLC_PRG.arr[98]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="99" TopLevelType="4">PLC_PRG.arr[99]</Var>
-		<Var Type="3" Flags="262216" Access="98" RefId="3" Offset="9" TopLevelType="4">PLC_PRG.arr[9]</Var>
-		<Var Type="1" Flags="32" Access="98" RefId="0" Offset="0">PLC_PRG.b</Var>
-		<Var Type="2" Flags="64" Access="98" RefId="4" Offset="152">PLC_PRG.c</Var>
+		<Var Type="1" Flags="33554500" Access="98" RefId="4" Offset="148">.rVersion</Var>
+		<Var Type="0" Flags="64" Access="98" RefId="4" Offset="146">PLC_PRG.a</Var>
+		<Var Type="1" Flags="64" Access="98" RefId="4" Offset="152">PLC_PRG.b</Var>
+		<Var Type="2" Flags="64" Access="98" RefId="4" Offset="156">PLC_PRG.c</Var>
 	</SymbolVarList>
 	<SymbolTaskList/>
 	<SymbolTargetSettings>
-		<MaxNumberOfPOUs>4096</MaxNumberOfPOUs>
+		<MaxNumberOfPOUs>2047</MaxNumberOfPOUs>
 		<Segments>
-			<Segment Area="1" RefId="0" Address="0" Size="24576" Attributes="0"/>
-			<Segment Area="0" RefId="1" Address="0" Size="65536" Attributes="0"/>
-			<Segment Area="0" RefId="2" Address="65536" Size="65536" Attributes="0"/>
-			<Segment Area="1" RefId="3" Address="24576" Size="106484" Attributes="2"/>
-			<Segment Area="0" RefId="4" Address="131072" Size="67108864" Attributes="1"/>
+			<Segment Area="-1" RefId="0" Address="536870912" Size="16384" Attributes="0"/>
+			<Segment Area="-1" RefId="1" Address="684190720" Size="3064" Attributes="0"/>
+			<Segment Area="-1" RefId="2" Address="684185600" Size="3064" Attributes="0"/>
+			<Segment Area="-1" RefId="3" Address="536887296" Size="16384" Attributes="2"/>
+			<Segment Area="0" RefId="4" Address="0" Size="1024000" Attributes="1"/>
 		</Segments>
 	</SymbolTargetSettings>
 </CoDeSysSymbolTable>

@@ -22,9 +22,7 @@ window.onload = function () {
             alert(err)
             setTimeout(function () { getConf(CONF_URL) }, 10000);
         }
-
     })
-
 }
 
 function getConf(confUrl, cb) {
@@ -165,7 +163,12 @@ function sdb2Json(buf) {
         aVars[ix].Type = aTypes[desc].Type;
         aVars[ix].Size = aTypes[desc].Size;
         offset += 8;
-        aVars[ix].Access = dv.getUint16(offset, true);
+        if (dv.getUint16(offset, true) === 98) {
+            aVars[ix].Access = 'rw';
+        }
+        else {
+            aVars[ix].Access = 'r';
+        }
         offset += 2;
         aVars[ix].RefId = dv.getUint16(offset, true);
         offset += 2;
@@ -224,17 +227,18 @@ function CreateDom(varsJson, mnemoObj, cb) {
 
 
     });
-
+    //Create array of current vars
     let curVarsJson = [];
     varsJson.forEach(function (varsItem) {
         mnemoObj.objects.forEach(function (confItem) {
             confItem.Name = confItem.Name.replaceAll('.', '_');
             if (varsItem.Name === confItem.Name) {
+                Object.assign(varsItem, confItem);
                 curVarsJson.push(varsItem);
             }
         });
     });
-
+    //Load main svg
     let s = Snap('#mnemo');
     Snap.load("./svg/" + mnemoObj.mainSvg, function (f) {
         let g = f.select("svg");
@@ -243,32 +247,33 @@ function CreateDom(varsJson, mnemoObj, cb) {
             y: mnemoObj.mainSvg_y
         })
         s.append(g);
-
+        //Preload uniq svg objects
         let svgObjects = {};
-        let arr = unique(mnemoObj.objects);
+        let arr = unique(curVarsJson);
         arr.forEach(function (Item, counter) {
             Snap.load("./svg/" + Item, function (f) {
                 svgObjects[Item] = f.select("svg");
                 if (arr.length == counter + 1) {
-                    RenderSvg(svgObjects, mnemoObj.objects);
+                    RenderSvg(svgObjects, curVarsJson);
                     return cb(null, curVarsJson);
                 }
             });
         });
     })
-
+    // uniq svg objects array
     function unique(arr) {
         var obj = {};
         for (var i = 0; i < arr.length; i++) {
             var str = arr[i].svgName;
-            obj[str] = true; // запомнить строку в виде свойства объекта
+            obj[str] = true;
         }
-        return Object.keys(obj); // или собрать ключи перебором для IE8-
+        return Object.keys(obj);
     }
-
+    //Render svg objects on html
     function RenderSvg(svgItems, confItems) {
+
         let uniqSvg = {};
-        let = svgObject = {};
+        let svgObject = {};
         confItems.forEach(function (confItem) {
             if (svgItems[confItem.svgName] === uniqSvg[confItem.svgName]) {
                 svgObject = svgItems[confItem.svgName].clone();
@@ -282,9 +287,18 @@ function CreateDom(varsJson, mnemoObj, cb) {
                 weight: confItem.weight,
                 x: confItem.x,
                 y: confItem.y,
-                "data-value": '0'
+                "data-value": '0',
+                objType: confItem.objType,
+                refId: confItem.RefId,
+                offset: confItem.Offset,
+                type: confItem.Type,
+                size: confItem.Size,
+                access: confItem.Access
             })
-            svgObject.altDrag()
+            // svgObject.altDrag()
+            svgObject.click(function () {
+                ShowPopup('block', this)
+            })
             s.append(svgObject);
 
             let curElem = document.getElementById(confItem.Name);
@@ -307,76 +321,8 @@ function CreateDom(varsJson, mnemoObj, cb) {
             observer.observe(curElem, config);
         });
     }
-
-
-
-
-    /*let tbody = document.getElementById('varsTable').getElementsByTagName("TBODY")[0];
     //alert(JSON.stringify(varsJson));
-    for (let i = 0; i < varsJson.length; i++) {
-        let row = document.createElement("TR");
-        let tdName = document.createElement("TD");
-        tdName.appendChild(document.createTextNode(varsJson[i].Name));
-        let tdValue = document.createElement("TD");
-        let divValue = document.createElement("DIV");
-        divValue.id = varsJson[i].Name;
-        let MO = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-        let observer = new MO(function (mutations) {
-            mutations.forEach(function (mutation) {
-                ChangeInnerHtml(mutation.target);
-            });
-        });
-        let config = {
-            'attributes': true,
-            'attributeOldValue': true,
-            'attributeFilter': ['data-value']
-        };
-        observer.observe(divValue, config);
-
-        tdValue.appendChild(divValue);
-        let tdAction = document.createElement("TD");
-        let data = {
-            RefId: varsJson[i].RefId,
-            Offset: varsJson[i].Offset,
-            Type: varsJson[i].Type,
-            Size: varsJson[i].Size
-        };
-        if (varsJson[i].Access === 98) {
-            if (varsJson[i].Type === 0) {
-                let tdButtonOn = document.createElement("BUTTON");
-                tdButtonOn.data = data;
-                tdButtonOn.addEventListener("mouseup", function () { WriteValue(this.data, 1) }, false);
-                tdButtonOn.appendChild(document.createTextNode('On'));
-                let tdButtonOff = document.createElement("BUTTON");
-                tdButtonOff.data = data;
-                tdButtonOff.addEventListener("mouseup", function () { WriteValue(this.data, 0) }, false);
-                tdButtonOff.appendChild(document.createTextNode('Off'));
-                tdAction.appendChild(tdButtonOn);
-                tdAction.appendChild(tdButtonOff);
-            }
-            if (varsJson[i].Type >= 1 && varsJson[i].Type <= 8) {
-                let tdInput = document.createElement("INPUT");
-                tdInput.placeholder = 'write here'
-                tdInput.data = data;
-                tdInput.addEventListener("keydown", function (e) {
-                    if (e.which == 13) {
-                        WriteValue(this.data, this.value);
-                    }
-                }, false);
-                tdInput.appendChild(document.createTextNode(''));
-                tdAction.appendChild(tdInput);
-            }
-        }
-        else {
-            tdAction.appendChild(document.createTextNode('read only'));
-        }
-        row.appendChild(tdName);
-        row.appendChild(tdValue);
-        row.appendChild(tdAction);
-        tbody.appendChild(row);
-    }*/
 }
-
 
 function ChangeText(mutationTarget) {
     let curSvg = Snap.select('#' + mutationTarget.id);
@@ -472,6 +418,70 @@ function getPlcValues(plcVars, webvisuUrl, cb) {
     }
 }
 
+function ShowPopup(state, svgObj) {
+    document.getElementById('PopupWindow').style.display = state;
+    document.getElementById('PopupWindow').innerHTML = svgObj;
+    document.getElementById('wrap').style.display = state;
+    if (typeof svgObj !== 'undefined') {
+        let curElem = document.getElementById(svgObj.attr("id"));
+        let MO = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+        let observer = new MO(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (svgObj.attr("objType") === 'text') {
+                    ChangeText(mutation.target);
+                }
+                if (svgObj.attr("objType") === 'layer') {
+                    ChangeLayer(mutation.target, mutation.oldValue);
+                }
+            });
+        });
+        let config = {
+            'attributes': true,
+            'attributeOldValue': true,
+            'attributeFilter': ['data-value']
+        };
+        observer.observe(curElem, config);
+        let data = {
+            RefId: svgObj.attr("refId"),
+            Offset: svgObj.attr("offset"),
+            Type: svgObj.attr("type"),
+            Size: svgObj.attr("size")
+        };
+        let tbody = document.getElementById('PopupWindow');
+        let tdAction = document.createElement("DIV");
+        if (svgObj.attr("access") === 'rw') {
+            if (svgObj.attr("type") === '0') {
+                let tdButtonOn = document.createElement("BUTTON");
+                tdButtonOn.data = data;
+                tdButtonOn.addEventListener("mouseup", function () { WriteValue(this.data, 1) }, false);
+                tdButtonOn.appendChild(document.createTextNode('On'));
+                let tdButtonOff = document.createElement("BUTTON");
+                tdButtonOff.data = data;
+                tdButtonOff.addEventListener("mouseup", function () { WriteValue(this.data, 0) }, false);
+                tdButtonOff.appendChild(document.createTextNode('Off'));
+                tdAction.appendChild(tdButtonOn);
+                tdAction.appendChild(tdButtonOff);
+            }
+            if (svgObj.attr("type") >= 1 && svgObj.attr("type") <= 8) {
+                let tdInput = document.createElement("INPUT");
+                tdInput.placeholder = 'write here';
+                tdInput.data = data;
+                tdInput.addEventListener("keydown", function (e) {
+                    if (e.which == 13) {
+                        WriteValue(this.data, this.value);
+                    }
+                }, false);
+                tdInput.appendChild(document.createTextNode(''));
+                tdAction.appendChild(tdInput);
+            }
+        }
+        else {
+            tdAction.appendChild(document.createTextNode('read only'));
+        }
+        tbody.appendChild(tdAction);
+    }
+}
+
 function WriteValue(obj, Value) {
     let req = null;
     if (window.XMLHttpRequest) {
@@ -493,10 +503,6 @@ function WriteValue(obj, Value) {
         req.send('|1|1|0|' + obj.RefId + '|' + obj.Offset + '|' + obj.Size + '|' + obj.Type + '|' + Value + '|');
     }
 }
-
-
-
-
 
 
 
