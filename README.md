@@ -14,8 +14,8 @@ How To Run on PFC200:
   2. Configure Symbol File. In menu Project->Options->Symbol configuration->Configure symbol file choose variable that you want to see in App and check Export variables of object.
   If you want to write to this variable, you need to check Write access.
   3. Download test Codesys project.
-  4. Put app folder to /var/www/.
-  5. Write in browser http://PLC_IP/sd/app/index.html
+  4. Put app folder to /var/www/ with FileZilla ftp client (user:root, pswd:wago).
+  5. Write in browser http://PLC_IP/app/index.html
 
 How To Run on PC
   1. install nodejs.
