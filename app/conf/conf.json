@@ -7,13 +7,13 @@
     "objects": [
       {
         "Name": "PLC_PRG.c",
-        "svgName": "text.svg",
+        "svgName": "text_frame.svg",
         "objType": "text",
         "access": "read",
         "x": 170,
         "y": 170,
-        "height": 50,
-        "weight": 50
+        "height": 10,
+        "weight": 10
       },
       {
         "Name": "PLC_PRG.a",
@@ -37,58 +37,41 @@
       },
       {
         "Name": "PLC_PRG.b",
-        "svgName": "text.svg",
+        "svgName": "text_frame.svg",
         "objType": "text",
         "access": "read",
         "x": 100,
         "y": 100,
-        "height": 100,
-        "weight": 100
+        "height": 10,
+        "weight": 10
       }
     ]
   },
   "mnemo2": {
     "name": "Мнемосхема №2",
+    "mainSvg": "PS-10kV_opt.svg",
+    "mainSvg_x": 150,
+    "mainSvg_y": 0,
     "objects": [
       {
-        "Name": "PLC_PRG.DI_1",
-        "svgName": "lamp_opt.svg",
-        "objType": "layer",
-        "access": "read",
-        "x": 50,
-        "y": 50,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "PLC_PRG.AI_1",
-        "svgName": "text.svg",
-        "objType": "text",
-        "access": "read",
-        "x": 100,
-        "y": 100,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "PLC_PRG.AI_2",
-        "svgName": "text.svg",
-        "objType": "text",
-        "access": "read",
-        "x": 150,
-        "y": 150,
-        "height": 50,
-        "weight": 50
-      },
-      {
-        "Name": "PLC_PRG.AI_3",
-        "svgName": "text.svg",
+        "Name": "PLC_PRG.c",
+        "svgName": "text_frame.svg",
         "objType": "text",
         "access": "read",
         "x": 170,
         "y": 170,
-        "height": 50,
-        "weight": 50
+        "height": 10,
+        "weight": 10
+      },
+      {
+        "Name": "PLC_PRG.a",
+        "svgName": "lamp_opt.svg",
+        "objType": "layer",
+        "access": "read",
+        "x": 200,
+        "y": 200,
+        "height": 25,
+        "weight": 25
       }
     ]
   }

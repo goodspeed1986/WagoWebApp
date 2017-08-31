@@ -1,17 +1,32 @@
-const SDB_URL = '../../plc/download.sdb'; // PLC 750-880
-const WEB_VISU_URL = '../../plc/webvisu.htm'; // PLC 750-880
-// const SDB_URL = '../../webvisu/DOWNLOAD.SDB'; // PLC 750-8202
-// const WEB_VISU_URL = '../../webvisu/webvisu.htm'; // PLC 750-8202
 const CONF_URL = './conf/conf.json';
-
+let SDB_URL, WEB_VISU_URL, conf, plcVarsJson, varsString, curVarsJson;
 window.onload = function () {
-    getConf(CONF_URL, function (err, confJson) {
+    getConf(CONF_URL, function (err, confJson, PlcType) {
         if (!err) {
-            let conf = JSON.parse(confJson);
+            if (PlcType === "lighttpd") {
+                SDB_URL = '../../webvisu/DOWNLOAD.SDB'; // PLC 750-8202
+                WEB_VISU_URL = '../../webvisu/webvisu.htm'; // PLC 750-8202
+            } else {
+                SDB_URL = '../../plc/download.sdb'; // PLC 750-880
+                WEB_VISU_URL = '../../plc/webvisu.htm'; // PLC 750-880
+            }
+            conf = JSON.parse(confJson);
+            let objSel = document.getElementById("mnemos");
+
+            Object.keys(conf).forEach(function (varsItem, i) {
+                objSel.options[i] = new Option(conf[varsItem].name, varsItem);
+            })
+            objSel.addEventListener("change", function () { loadMnemo(conf[this.value]) }, false);
+
+
             getPlcVars(SDB_URL, function (err, varsJson) {
                 if (!err) {
-                    CreateDom(varsJson, conf['mnemo1'], function (err, curVarsJson) {
-                        startPoll(curVarsJson, WEB_VISU_URL);
+                    plcVarsJson = varsJson;
+
+                    CreateDom(plcVarsJson, conf[Object.keys(conf)[0]], function (err, curVars) {
+                        curVarsJson = curVars;
+                        varsString = PlcVars2String(curVars);
+                        Poll();
                     });
                 } else {
                     alert(err)
@@ -53,13 +68,20 @@ function getConf(confUrl, cb) {
     req.onreadystatechange = function () {
         if (req.readyState == 4) {
             if (req.status == 200) {
-                return cb(null, req.response);
+                return cb(null, req.response, req.getResponseHeader('Server'));
             }
             else {
                 return cb('PLC_NOT_RESPONSE_CONF');
             }
         }
     }
+}
+
+function loadMnemo(mnemo) {
+    CreateDom(plcVarsJson, mnemo, function (err, curVars) {
+        curVarsJson = curVars;
+        varsString = PlcVars2String(curVars);
+    });
 }
 
 function getPlcVars(sdbUrl, cb) {
@@ -240,6 +262,7 @@ function CreateDom(varsJson, mnemoObj, cb) {
     });
     //Load main svg
     let s = Snap('#mnemo');
+    s.clear();
     Snap.load("./svg/" + mnemoObj.mainSvg, function (f) {
         let g = f.select("svg");
         g.attr({
@@ -346,8 +369,8 @@ function ChangeLayer(mutationTarget, mutationOldValue) {
     }
 }
 
-function startPoll(plcVars, webvisuUrl) {
-    getPlcValues(plcVars, webvisuUrl, function (err, plcVarsValues) {
+function Poll() {
+    getPlcValues(varsString, curVarsJson, function (err, plcVarsValues) {
         if (!err) {
             for (let i = 0; i < plcVarsValues.length; i++) {
                 let g = Snap.select('#' + plcVarsValues[i].Name);
@@ -359,26 +382,17 @@ function startPoll(plcVars, webvisuUrl) {
                     }
                 }
             }
-            setTimeout(function () { startPoll(plcVars, webvisuUrl) }, 200);
+            setTimeout(function () { Poll() }, 200);
         } else {
             alert(err);
-            setTimeout(function () { startPoll(plcVars, webvisuUrl) }, 10000);
+            setTimeout(function () { Poll() }, 10000);
         }
     })
+
+
 }
 
-function getPlcValues(plcVars, webvisuUrl, cb) {
-    let cnt = plcVars.length;
-    let postData = '|0|' + cnt;
-    let ix = 0;
-
-    plcVars.forEach(function (item) {
-        let out = '|' + ix + '|' + item.RefId + '|' + item.Offset + '|' + item.Size + '|' + item.Type;
-        ix++;
-        postData += out;
-    }, this);
-    postData += '|';
-
+function getPlcValues(varsString, plcVars, cb) {
     let req = null;
     if (window.XMLHttpRequest) {
         try {
@@ -395,11 +409,11 @@ function getPlcValues(plcVars, webvisuUrl, cb) {
     }
 
     let arr = [];
-    req.open("post", webvisuUrl, true);
+    req.open("post", WEB_VISU_URL, true);
     req.overrideMimeType("text/html; charset=windows-1251");
     req.setRequestHeader("Content-type", "text/html; charset=windows-1251");
     req.timeout = 3000;
-    req.send(postData);
+    req.send(varsString);
 
     req.onreadystatechange = function () {
         if (req.readyState == 4) {
@@ -418,11 +432,31 @@ function getPlcValues(plcVars, webvisuUrl, cb) {
     }
 }
 
+function PlcVars2String(plcVars) {
+    let cnt = plcVars.length;
+    let postData = '|0|' + cnt;
+    let ix = 0;
+
+    plcVars.forEach(function (item) {
+        let out = '|' + ix + '|' + item.RefId + '|' + item.Offset + '|' + item.Size + '|' + item.Type;
+        ix++;
+        postData += out;
+    }, this);
+    postData += '|';
+    return postData;
+}
+
 function ShowPopup(state, svgObj) {
     document.getElementById('PopupWindow').style.display = state;
+
     document.getElementById('PopupWindow').innerHTML = svgObj;
     document.getElementById('wrap').style.display = state;
     if (typeof svgObj !== 'undefined') {
+        let svg = Snap('#' + svgObj.attr("id"));
+        svg.attr({
+            height: 100,
+            weight: 100,
+        });
         let curElem = document.getElementById(svgObj.attr("id"));
         let MO = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
         let observer = new MO(function (mutations) {
@@ -500,6 +534,8 @@ function WriteValue(obj, Value) {
 
     if (req) {
         req.open("POST", WEB_VISU_URL, true);
+        req.overrideMimeType("text/html; charset=windows-1251");
+        req.setRequestHeader("Content-type", "text/html; charset=windows-1251");
         req.send('|1|1|0|' + obj.RefId + '|' + obj.Offset + '|' + obj.Size + '|' + obj.Type + '|' + Value + '|');
     }
 }
