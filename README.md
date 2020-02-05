@@ -1,5 +1,6 @@
 # WagoWebApp
 Single Page Web Application for Wago Controllers
+You can create your own visualization on HTML5 using the data exchange protocol between Codesys 2.3 and Java applet in web browser
 
 How To Run on PLC 750-880:
   1. Configure Target Settings in Codesys 2.3.9.xx. In Target Platform Tab check Download symbol.file and in Visualization Tab check Web Visualization.
